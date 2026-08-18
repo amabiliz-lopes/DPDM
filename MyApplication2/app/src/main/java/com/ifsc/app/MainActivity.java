@@ -25,13 +25,12 @@ public class MainActivity extends AppCompatActivity {
 
         tv.setText("-");
 
-
-
         Button button=findViewById(R.id.button);
-        button.setText("Click Aqui");
+        button.setText("Iniciar contagem");
         button.setOnClickListener(v -> {
             contador++;
             tv.setText(Integer.toString(contador));
+            button.setText("Contar");
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
