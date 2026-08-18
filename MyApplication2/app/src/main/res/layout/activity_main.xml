@@ -31,4 +31,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text" />
 
+    <EditText
+        android:id="@+id/edMin"
+        android:layout_width="188dp"
+        android:layout_height="39dp"
+        android:ems="10"
+        android:hint="Máximo"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toBottomOf="@+id/edMax"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/edMax"
+        app:layout_constraintTop_toTopOf="@+id/edMax"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/edMax"
+        android:layout_width="188dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginBottom="63dp"
+        android:ems="10"
+        android:hint="Mínimo"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toTopOf="@+id/text"
+        app:layout_constraintEnd_toStartOf="@+id/edMin"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
