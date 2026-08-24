@@ -1,6 +1,9 @@
 package com.ifsc.app;
 
+import static android.os.Build.VERSION_CODES_FULL.R;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,50 +26,44 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
 
-        setContentView(R.layout.activity_main);//Constraint, Button e Text?
-        TextView tv = findViewById(R.id.text);
+        setContentView(com.ifsc.app.R.layout.activity_main);//Constraint, Button e Text?
 
-        tv.setText("-");
-
-        Button button=findViewById(R.id.button);
-        button.setText("Gerar Número");
-
-        EditText edmin,edmax;
-        edmin=findViewById(R.id.edMin);
-        edmax=findViewById(R.id.edMax);
-
-        button.setOnClickListener(v -> {
-
-            String smin=edmin.getText().toString();
-            String smax=edmax.getText().toString();
-
-            if(smin.isEmpty()){
-                edmin.setError("Informe um inteiro");
-                return;
-            }
-            if(smax.isEmpty()){
-                edmax.setError("Informe um número");
-            }
-
-            int min = Integer.parseInt(smin);
-            int max = Integer.parseInt(smax);
-
-            if(min>max){
-                Toast.makeText(this, "Defina mínimo menor que máximo", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            Random random = new Random();
-            int randonN = random.nextInt(min,max);
-            tv.setText(Integer.toString(randonN));
-
-
-        });
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(com.ifsc.app.R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        Toast.makeText(this, "onCreate", Toast.LENGTH_LONG).show();
+        Log.d("cicloDaVida", "onCreate");
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Toast.makeText(this, "onCreate", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(this, "onResume", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Toast.makeText(this, "onPause", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Toast.makeText(this, "onStop", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(this, "onDestroy", Toast.LENGTH_LONG).show();
     }
 }
