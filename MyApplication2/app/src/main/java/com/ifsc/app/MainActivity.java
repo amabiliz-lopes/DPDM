@@ -2,6 +2,7 @@ package com.ifsc.app;
 
 import static android.os.Build.VERSION_CODES_FULL.R;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,6 +36,12 @@ public class MainActivity extends AppCompatActivity {
         });
         Toast.makeText(this, "onCreate", Toast.LENGTH_LONG).show();
         Log.d("cicloDaVida", "onCreate");
+
+        Button b = findViewById(com.ifsc.app.R.id.button);
+        b.setOnClickListener(v->{
+            Intent i = new Intent(this, ActivityB.class);
+            startActivity(i);
+        });
     }
 
     @Override
