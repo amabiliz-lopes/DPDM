@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="MissingDefaultResource">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButtonReturn"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonVoltar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -19,11 +20,36 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="259dp"
-        android:layout_height="333dp"
+        android:layout_width="264dp"
+        android:layout_height="60dp"
+        android:text="Você chegou aqui através de uma Intent Explícita!"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.75" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="266dp"
+        android:layout_height="147dp"
+        android:layout_marginBottom="292dp"
+        android:text="A Intent Explícita especifica qual componente de qual aplicativo vai atender a intent, especificando um ComponentName completo. Normalmente, é usada para iniciar um componente no póprio app, porque sabe o nome da classe da atividade ou do serviço que quer iniciar."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textOrigem"
+        android:layout_width="261dp"
+        android:layout_height="50dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.315" />
 </androidx.constraintlayout.widget.ConstraintLayout>

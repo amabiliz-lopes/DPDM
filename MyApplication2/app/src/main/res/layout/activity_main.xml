@@ -12,25 +12,24 @@
         android:layout_width="364dp"
         android:layout_height="161dp"
         android:layout_marginTop="148dp"
-        android:text="TextView"
+        android:text="Uma Intent é uma mensagem que um componente do app envia ao sistema, pedindo que ele execute uma ação. Toque em um dos botões abaixo para ver um exemplo na prática."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonExplicita"
         android:layout_width="177dp"
         android:layout_height="71dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="112dp"
         android:text="Intent Explicita"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewExplicação" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonImplicita"
         android:layout_width="176dp"
         android:layout_height="73dp"
         android:layout_marginTop="100dp"
@@ -39,6 +38,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintTop_toBottomOf="@+id/buttonExplicita"
         app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
