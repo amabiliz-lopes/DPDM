@@ -5,39 +5,83 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:visibility="visible">
 
     <TextView
         android:id="@+id/textViewExplicação"
-        android:layout_width="364dp"
-        android:layout_height="161dp"
-        android:layout_marginTop="148dp"
-        android:text="Uma Intent é uma mensagem que um componente do app envia ao sistema, pedindo que ele execute uma ação. Toque em um dos botões abaixo para ver um exemplo na prática."
+        android:layout_width="314dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="68dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:gravity="center"
+        android:text="Uma Intent é uma mensagem que um componente do app envia ao sistema, pedindo que ele execute uma ação. "
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="276dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:gravity="center"
+        android:text="Toque em um dos botões abaixo para ver um exemplo na prática."
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewExplicação" />
 
     <Button
         android:id="@+id/buttonExplicita"
         android:layout_width="177dp"
         android:layout_height="71dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="52dp"
+        android:backgroundTint="#EB4A92"
+        android:fontFamily="sans-serif-black"
         android:text="Intent Explicita"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewExplicação" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <Button
         android:id="@+id/buttonImplicita"
         android:layout_width="176dp"
         android:layout_height="73dp"
         android:layout_marginTop="100dp"
+        android:backgroundTint="#EB4A93"
+        android:fontFamily="sans-serif-black"
         android:text="Intent Implicita"
+        android:textColorHighlight="#0288D1"
+        android:textColorLink="#E2B7FD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonExplicita"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="323dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="88dp"
+        android:fontFamily="@font/alfa_slab_one"
+        android:gravity="center"
+        android:shadowColor="#DFA7F5"
+        android:text="Intents"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#EB4E97"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Intents" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
