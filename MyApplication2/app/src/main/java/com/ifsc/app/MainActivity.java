@@ -4,8 +4,10 @@ import android.content.ActivityNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,68 +30,27 @@ import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
 
+    String[] nomes = new String[]{"Helena", "Livia", "Gabi", "Amábili", "Romulo", "Gabriel"};
+    ListView lv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);//Constraint, Button e Text?
 
-        Button buttonExplicita = findViewById(R.id.buttonExplicita);
-        Button buttonImplicita = findViewById(R.id.buttonImplicita);
-
-        //Intent Explícita
-        buttonExplicita.setOnClickListener(v->{
-            Intent exemploExplicita = new Intent(this,IntentExplicita.class);
-            exemploExplicita.putExtra("origem", "MainActivity");
-            startActivity(exemploExplicita);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(com.ifsc.app.R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
         });
 
-        //Intent Implícita
-        buttonImplicita.setOnClickListener(v->{
+        lv = findViewById(R.id.listView);
 
-            try{
-                //Copia o PDF de res/raw para o cahce do app
-                File pastaCache = new File(getCacheDir(), "pdfs");
-                if(!pastaCache.exists()){
-                    pastaCache.mkdirs();
-                }
-                File arquivoPdf = new File(pastaCache, "intent_implicita.pdf");
-
-                if (!arquivoPdf.exists()) {
-                    InputStream input = getResources().openRawResource(R.raw.intent_implicita);
-                    OutputStream output = new FileOutputStream(arquivoPdf);
-
-                    byte[] buffer = new byte[1024];
-                    int tamanhoLido;
-                    while ((tamanhoLido = input.read(buffer)) != -1) {
-                        output.write(buffer, 0, tamanhoLido);
-                    }
-                    output.flush();
-                    output.close();
-                    input.close();
-                }
-
-                //Gera uma URI segura via FileProvider
-                Uri uri = FileProvider.getUriForFile(
-                        this,
-                        getPackageName() + ".provider",
-                        arquivoPdf
-                );
-
-                //Cria a Intent Implícita
-                Intent abrirPdf = new Intent(Intent.ACTION_VIEW);
-                abrirPdf.setDataAndType(uri, "application/pdf");
-                abrirPdf.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                //Apresenta o seletor de apps
-                Intent chooser = Intent.createChooser(abrirPdf, "Abrir PDF com...");
-                startActivity(chooser);
-
-            } catch (IOException e) {
-                Toast.makeText(this, "Erro ao ler o PDF.", Toast.LENGTH_SHORT).show();
-            } catch (ActivityNotFoundException e){
-                Toast.makeText(this, "Nenhum app encontrado para abrir o PDF.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                R.layout.item_lista,
+                R.id.tvNome,
+                nomes);
+        lv.setAdapter(adapter);
     }
 }
