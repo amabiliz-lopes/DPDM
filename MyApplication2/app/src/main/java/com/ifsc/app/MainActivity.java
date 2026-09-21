@@ -47,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         lv = findViewById(R.id.listView);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+        NomesAdapter adapter = new NomesAdapter(this,
                 R.layout.item_lista,
-                R.id.tvNome,
+                R.id.edNome,
                 nomes);
         lv.setAdapter(adapter);
     }
