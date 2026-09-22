@@ -1,6 +1,10 @@
 package com.ifsc.app;
 
 import android.content.ActivityNotFoundException;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +27,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import android.content.Intent;
 
@@ -30,8 +36,9 @@ import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
 
-    String[] nomes = new String[]{"Helena", "Livia", "Gabi", "Amábili", "Romulo", "Gabriel"};
     ListView lv;
+    ArrayList<PackageInfo> installedApps;
+    List<ResolveInfo> appsListIntentMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +52,19 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        lv = findViewById(R.id.listView);
+        PackageManager packageManager = getPackageManager();
+        installedApps = new ArrayList<>();
 
-        NomesAdapter adapter = new NomesAdapter(this,
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUCHER);
+        appsListIntentMain = packageManager.queryIntentActivities(intent, 0);
+
+
+
+        AppAdapter adapter = new AppAdapter(this,
                 R.layout.item_lista,
-                R.id.edNome,
-                nomes);
+                installedApps);
+        lv = findViewById(R.id.listView_apps);
         lv.setAdapter(adapter);
     }
 }
