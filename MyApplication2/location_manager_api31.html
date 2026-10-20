@@ -1,0 +1,68 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LocationManager · Android API 31</title>
+<style>
+:root{--bg:#080d18;--panel:#111a2b;--line:#263550;--text:#eef4ff;--muted:#9eacc6;--cyan:#55ddff;--lime:#bcff7b;--purple:#bca2ff;--orange:#ffbe71}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 8%,#15334a 0,transparent 35%),radial-gradient(ellipse at 5% 90%,#211c47 0,transparent 32%),var(--bg);color:var(--text);font:16px/1.4 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;display:grid;place-items:center;padding:24px}
+.slide{width:min(1440px,100%);aspect-ratio:16/9;min-height:700px;max-height:900px;border:1px solid #30405c;border-radius:22px;background:linear-gradient(135deg,rgba(16,26,44,.96),rgba(8,14,27,.96));box-shadow:0 28px 100px #0009;padding:36px 42px;display:flex;flex-direction:column;gap:18px;overflow:hidden;position:relative}
+.top{display:flex;justify-content:space-between;align-items:center}.eyebrow{color:var(--cyan);font-weight:750;letter-spacing:.14em;text-transform:uppercase;font-size:12px}.tag{border:1px solid #426078;border-radius:99px;padding:7px 12px;color:#b8cae4;font-size:12px}h1{font-size:clamp(34px,4vw,54px);line-height:1.02;margin:6px 0 0;letter-spacing:-.04em}h1 span{color:var(--cyan)}.subtitle{color:var(--muted);margin:7px 0 0;font-size:16px}.head{display:grid;grid-template-columns:1fr auto;align-items:end}.controls{display:flex;gap:8px}.btn{background:#17243a;color:var(--text);border:1px solid #364967;padding:9px 13px;border-radius:10px;cursor:pointer;font:600 13px inherit}.btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.grid{display:grid;grid-template-columns:1.05fr 1.15fr;gap:18px;flex:1;min-height:0}.left{display:grid;grid-template-rows:auto 1fr auto;gap:14px;min-height:0}.panel{background:linear-gradient(145deg,#131e31dd,#0d1626dd);border:1px solid var(--line);border-radius:16px;padding:17px 18px}.panel h2{font-size:14px;text-transform:uppercase;letter-spacing:.1em;margin:0 0 12px;color:#d9e6fb}.flow{display:flex;align-items:center;gap:9px}.node{border:1px solid #344967;border-radius:12px;background:#121e31;padding:11px 12px;text-align:center;flex:1;font-size:12px;color:#dce8fa;min-width:0}.node b{display:block;color:var(--cyan);font-size:13px;margin-bottom:3px}.arrow{color:#6a839f;font-size:20px}.providers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.provider{border:1px solid var(--line);border-radius:12px;padding:12px;background:#0d1728;transition:.3s}.provider strong{display:block;font-size:13px;margin-bottom:5px}.provider p{color:var(--muted);font-size:11px;margin:0}.provider.gps strong{color:var(--lime)}.provider.net strong{color:var(--orange)}.provider.fused strong{color:var(--purple)}.provider.active{transform:translateY(-3px);border-color:var(--cyan);box-shadow:0 0 20px #55ddff24}.badge{font-size:10px;color:#8fa2bf;margin-top:7px;display:block}.pipeline{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:13px}.step{font-size:11px;color:#c2d2eb;background:#17243a;border-radius:9px;padding:8px 9px;text-align:center;flex:1}.step.on{color:#06131a;background:var(--cyan);font-weight:700}.dots{height:8px;width:8px;background:var(--lime);border-radius:50%;box-shadow:0 0 12px var(--lime);display:inline-block;margin-right:5px}.small{color:var(--muted);font-size:11px;margin-top:10px}.codepanel{display:flex;flex-direction:column;min-height:0}.codehead{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}.codehead h2{margin:0}.lang{font-size:10px;color:var(--lime);border:1px solid #42614a;padding:4px 7px;border-radius:6px}pre{margin:0;padding:15px 16px;border-radius:12px;background:#07101c;border:1px solid #202e43;overflow:auto;flex:1;color:#d6e4f8;font:12px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre}.kw{color:#c6a8ff}.str{color:#a6e88b}.com{color:#7d91ad}.fn{color:#72dfff}.foot{display:flex;justify-content:space-between;align-items:center;color:#8293ad;font-size:10px;border-top:1px solid #26344b;padding-top:10px}.foot a{color:#a5dff0;text-decoration:none}.note{color:#c9d5e8} .pulse{animation:pulse 1s ease-in-out infinite alternate}@keyframes pulse{to{box-shadow:0 0 22px #55ddff55}}
+@media(max-width:900px){body{padding:10px}.slide{aspect-ratio:auto;min-height:100vh;padding:24px}.head{grid-template-columns:1fr}.controls{margin-top:12px}.grid{grid-template-columns:1fr}.left{grid-template-rows:auto auto auto}.codepanel{min-height:410px}.flow{flex-wrap:wrap}.arrow{display:none}.providers{grid-template-columns:1fr}.foot{gap:12px;align-items:flex-start;flex-direction:column}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main class="slide" aria-label="Slide: LocationManager no Android API 31">
+ <div class="top"><div class="eyebrow">Android · localização em Java</div><div class="tag">minSdk 31 · API level 31+</div></div>
+ <section class="head"><div><h1>Do provider ao <span>Location</span></h1><p class="subtitle">Como o LocationManager entrega coordenadas — e como escolher a fonte certa.</p></div><div class="controls"><button class="btn" id="toggle">⏸ Pausar animação</button><button class="btn" id="next">Próxima etapa ↗</button></div></section>
+ <section class="grid">
+  <div class="left">
+   <article class="panel"><h2>Fluxo da solicitação</h2><div class="flow"><div class="node"><b>1 · App</b>pede permissão</div><div class="arrow">→</div><div class="node"><b>2 · LocationManager</b>seleciona provider</div><div class="arrow">→</div><div class="node"><b>3 · Location</b>lat · lon · precisão</div></div></article>
+   <article class="panel"><h2>Providers: quem calcula a posição?</h2><div class="providers"><div class="provider gps" id="gps"><strong>◉ GPS / GNSS</strong><p>Satélites. Boa precisão ao ar livre; pode demorar e consome mais bateria.</p><span class="badge">FONTE DE SATÉLITE</span></div><div class="provider net" id="net"><strong>⌁ NETWORK</strong><p>Redes Wi‑Fi e celular. Resposta rápida; precisão depende do ambiente.</p><span class="badge">FONTE DE REDE</span></div><div class="provider fused" id="fused"><strong>✦ FUSED (API 31)</strong><p>Combina fontes disponíveis para equilibrar precisão e energia.</p><span class="badge">SE PRESENTE NO DISPOSITIVO</span></div></div><div class="pipeline" id="pipeline"><div class="step on">Pedido</div><div class="step">Permissão</div><div class="step">Provider</div><div class="step">Callback</div><div class="step">Coordenadas</div></div><div class="small"><span class="dots"></span><span id="status">Demonstração: provider selecionado conforme disponibilidade e cenário.</span></div></article>
+   <article class="panel"><h2>Na prática</h2><div class="note" style="font-size:13px">Peça <b>ACCESS_FINE_LOCATION</b> (ou coarse para aproximada) em tempo de execução. Verifique provider habilitado, trate <b>SecurityException</b> e remova atualizações no ciclo de vida apropriado.</div></article>
+  </div>
+  <article class="panel codepanel"><div class="codehead"><h2>Exemplo Java · atualizações</h2><span class="lang">JAVA · API 31</span></div><pre><code><span class="com">// Manifest: ACCESS_FINE_LOCATION</span>
+<span class="com">// Após conceder a permissão em tempo de execução:</span>
+<span class="kw">LocationManager</span> lm = (<span class="kw">LocationManager</span>)
+    getSystemService(LOCATION_SERVICE);
+
+<span class="kw">if</span> (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+        == PackageManager.PERMISSION_GRANTED) {
+    <span class="kw">String</span> provider = lm.isProviderEnabled(
+            LocationManager.GPS_PROVIDER)
+        ? LocationManager.GPS_PROVIDER
+        : LocationManager.NETWORK_PROVIDER;
+
+    lm.requestLocationUpdates(provider,
+        2_000L,       <span class="com">// intervalo desejado: 2 s</span>
+        5f,           <span class="com">// deslocamento mínimo: 5 m</span>
+        location -&gt; {
+            <span class="kw">double</span> lat = location.getLatitude();
+            <span class="kw">double</span> lon = location.getLongitude();
+            <span class="kw">float</span> accuracy = location.getAccuracy();
+            runOnUiThread(() -&gt; status.setText(
+                lat + ", " + lon + " ±" + accuracy + " m"));
+        },
+        Looper.getMainLooper());
+}
+
+<span class="com">// Em onStop() quando não precisar mais:</span>
+lm.removeUpdates(locationListener);</code></pre><div class="small">Exemplo didático: solicitar permissão antes; registrar LocationListener como campo para removê-lo depois. Confirme provider disponível antes de usá-lo.</div></article>
+ </section>
+ <footer class="foot"><span>Ideia-chave: o app solicita; o sistema decide como obter a posição dentro do provider escolhido.</span><span>Docs: <a href="https://developer.android.com/reference/android/location/LocationManager">LocationManager</a> · <a href="https://developer.android.com/training/location/permissions">Permissões</a></span></footer>
+</main>
+<script>
+const steps=[...document.querySelectorAll('.step')], providers=[...document.querySelectorAll('.provider')];
+const labels=['Pedido recebido…','Permissão verificada…','Fonte escolhida pelo cenário…','LocationListener recebe atualização…','Latitude, longitude e precisão exibidas.'];
+let index=0, running=true;
+function animate(){steps.forEach((s,i)=>s.classList.toggle('on',i===index));providers.forEach(p=>p.classList.toggle('active',p.id===['gps','net','fused','gps','fused'][index]));document.getElementById('status').textContent=labels[index];index=(index+1)%steps.length;}
+let timer=setInterval(animate,1250);
+document.getElementById('toggle').onclick=()=>{running=!running;clearInterval(timer);if(running)timer=setInterval(animate,1250);document.getElementById('toggle').textContent=running?'⏸ Pausar animação':'▶ Retomar animação';};
+document.getElementById('next').onclick=()=>animate();
+animate();
+</script>
+</body></html>
+
+

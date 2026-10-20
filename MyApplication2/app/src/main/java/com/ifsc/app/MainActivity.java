@@ -1,17 +1,12 @@
 package com.ifsc.app;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
+import static androidx.core.content.ContextCompat.checkSelfPermission;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -20,13 +15,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.ArrayList;
+import org.jspecify.annotations.NonNull;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener{
+public class MainActivity extends AppCompatActivity {
+    LocationManager locationManager;
+    TextView textView;
 
-    Integer contador = 0;
-    TextView tv;
-    SQLiteDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,55 +33,41 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             return insets;
         });
 
-        SensorManager sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        Sensor ac = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        textView = findViewById(R.id.textView);
 
-        sm.registerListener(this, ac,SensorManager.SENSOR_DELAY_NORMAL);
-        tv = findViewById(R.id.txViewExibir);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        //Criando banco de dados
-        database = openOrCreateDatabase("bd", MODE_PRIVATE, null);
-        database.execSQL("CREATE TABLE IF NOT EXISTS eventos (id  INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "value1 REAL(5,2)," +
-                "value2 REAL(5,2), " +
-                "value3 REAL(5,2))");
-        getAllEvents();
-    }
+        //solicitar permisão em tempo de execução
+        //requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        //if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+          //  locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+        //}
 
-    public ArrayList<Eventos> getAllEvents(){
-        Cursor cursor = database.rawQuery("SELECT * FROM eventos LIMIT ?", new String[]{"1000"});
-        cursor.moveToFirst();
-
-        ArrayList<Eventos> result = new ArrayList<>();
-        while (!cursor.isAfterLast()){
-            result.add(
-                    new Eventos(cursor.getInt(0),
-                            new Float[]{cursor.getFloat(1), cursor.getFloat(2), cursor.getFloat(3)})
-            );
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            //define o provider
+             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, location -> {
+                textView.setText(location.getLatitude()+", "+ location.getLongitude() );
+             });
+        } else{
+            //Solicita a permissão em tempo de execução
+            requestPermissions(new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            }, 1);
         }
-
-        return result;
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
+    public void onRequestPermissionsResult(int requestCode, @androidx.annotation.NonNull String[] permissions, @androidx.annotation.NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == 1){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
 
+                }
+            }
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-       tv.setText(Float.toString(event.values[0])+ " : " +
-               Float.toString(event.values[1])+ " : " +
-               Float.toString(event.values[2]));
-
-       //Adicionando valores no banco de dados
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("value1", event.values[0]);
-        contentValues.put("value2", event.values[1]);
-        contentValues.put("value3", event.values[2]);
-
-        Log.v("evento", "Inserido: " +event); //Configurando mensagem de ação
-
-       database.insert("eventos", null, contentValues);
     }
 }
